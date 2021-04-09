@@ -2,18 +2,34 @@
 
 Node::Node() {}
 
-void Node::setLeft(int* l) {
+void Node::setData(int d) {
+  data = d;
+}
+
+void Node::setParent(Node* p) {
+  parent = p;
+}
+
+void Node::setLeft(Node* l) {
   left = l;
 }
 
-void Node::setRight(int* r) {
+void Node::setRight(Node* r) {
   right = r;
 }
 
-int* Node::getLeft() {
+int Node::getData() {
+  return data;
+}
+
+Node* Node::getParent() {
+  return parent;
+}
+
+Node* Node::getLeft() {
   return left;
 }
 
-int* Node::getRight() {
+Node* Node::getRight() {
   return right;
 }

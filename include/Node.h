@@ -4,13 +4,20 @@
 class Node {
  public:
   Node();
-  void setLeft(int*);
-  void setRight(int*);
-  int* getLeft();
-  int* getRight();
+  void setData(int);
+  void setParent(Node*);
+  void setLeft(Node*);
+  void setRight(Node*);
+
+  int getData();
+  Node* getParent();
+  Node* getLeft();
+  Node* getRight();
 
  private:
-  int* left = nullptr;
-  int* right = nullptr;
+  int data;
+  Node* parent = nullptr;
+  Node* left = nullptr;
+  Node* right = nullptr;
 };
 #endif
