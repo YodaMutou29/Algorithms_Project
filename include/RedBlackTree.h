@@ -7,7 +7,12 @@
 class RedBlackTree {
  public:
   RedBlackTree();
+  void setRootValue(int);
+  int getRootValue();
   bool setChild(Node*, std::string, Node*);
   void replaceChild(Node*, Node*, Node*);
+
+ private:
+  Node* root = nullptr;
 };
 #endif
