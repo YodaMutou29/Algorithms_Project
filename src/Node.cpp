@@ -1,9 +1,16 @@
 #include "Node.h"
+#include <iostream>
+#include <string>
 
 Node::Node() {}
 
 void Node::setData(int d) {
   data = d;
+  //std::cout << "data now set to " << data << std::endl;
+}
+
+void Node::setColour(Colour c) {
+  colour = c;
 }
 
 void Node::setParent(Node* p) {
@@ -20,6 +27,13 @@ void Node::setRight(Node* r) {
 
 int Node::getData() {
   return data;
+}
+
+std::string Node::getColourName() {
+  if (colour == BLACK) {
+    return "black";
+  }
+  return "red";
 }
 
 Node* Node::getParent() {
