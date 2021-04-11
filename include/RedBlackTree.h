@@ -29,4 +29,5 @@ class RedBlackTree {
 };
 //implement ostream override
 std::ostream& operator<< (std::ostream&, RedBlackTree*);
+std::ostream& operator<< (std::ostream&, Node*);
 #endif

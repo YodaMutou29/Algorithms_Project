@@ -71,3 +71,8 @@ bool RedBlackTree::replaceChild(Node* parent, Node* currentChild, Node* newChild
 std::ostream& operator<< (std::ostream& out, RedBlackTree* r) {
   return out;
 }
+
+std::ostream& operator<< (std::ostream& out, Node* n) {
+  std::cout << "[" << n->getColourName() << ", " << n->getData() << "]";
+  return out;
+}
