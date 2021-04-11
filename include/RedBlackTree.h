@@ -19,6 +19,7 @@ class RedBlackTree {
   //add an insert function
   //add a remove function
 
+  int getHeight();
   void setRoot(Node*);
   Node* getRoot();
   bool setChild(Node*, std::string, Node*);
@@ -26,6 +27,7 @@ class RedBlackTree {
 
  private:
   Node* root = new Node();
+  int numOfNodes = 1;
 };
 //implement ostream override
 std::ostream& operator<< (std::ostream&, RedBlackTree*);

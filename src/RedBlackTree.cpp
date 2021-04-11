@@ -1,5 +1,6 @@
 #include "RedBlackTree.h"
 #include "Node.h"
+#include <math.h>
 #include <iostream>
 
 RedBlackTree::RedBlackTree() {
@@ -34,6 +35,10 @@ void RedBlackTree::rotateRight(Node* n) {
   setChild(n, "left", rightOfLeftChild);
 }
 
+int RedBlackTree::getHeight() {
+  return std::log2(numOfNodes);
+}
+
 void RedBlackTree::setRoot(Node* r) {
   //std::cout << "setting root value to " << v << std::endl;
   root = r;
@@ -50,8 +55,10 @@ bool RedBlackTree::setChild(Node* parent, std::string whichChild, Node* child) {
   }
   if (whichChild == "left") {
     parent->setLeft(child);
+    numOfNodes++;
   } else {
     parent->setRight(child);
+    numOfNodes++;
   }
   if (child != nullptr) {
     child->setParent(parent);
@@ -69,10 +76,16 @@ bool RedBlackTree::replaceChild(Node* parent, Node* currentChild, Node* newChild
 }
 
 std::ostream& operator<< (std::ostream& out, RedBlackTree* r) {
+  out << "Root: " << r->getRoot() << std::endl;
   return out;
 }
 
 std::ostream& operator<< (std::ostream& out, Node* n) {
-  std::cout << "[" << n->getColourName() << ", " << n->getData() << "]";
+  if (n == nullptr) {
+    out << "            ";
+  } else {
+    out << "[" << n->getColourName() << ", " << n->getData() << "]";
+    out << " L: " << n->getLeft() << "  R: " << n->getRight();
+  }
   return out;
 }
