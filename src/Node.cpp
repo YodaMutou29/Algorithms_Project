@@ -40,6 +40,22 @@ Node* Node::getParent() {
   return parent;
 }
 
+Node* Node::getGrandparent() {
+  return parent->getParent();
+}
+
+Node* Node::getSibling() {
+  if (parent->getLeft() == this) {
+    return parent->getRight();
+  } else {
+    return parent->getLeft();
+  }
+}
+
+Node* Node::getUncle() {
+  return parent->getSibling();
+}
+
 Node* Node::getLeft() {
   return left;
 }

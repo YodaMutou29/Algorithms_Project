@@ -50,5 +50,7 @@ int main() {
     (((rbt->getRoot())->getRight())->getRight())->getColourName() << std::endl;
   std::cout << "Performing a left rotation..." << std::endl;
   rbt->rotateLeft((rbt->getRoot())->getRight());
+  std::cout << "Root colour = " << (rbt->getRoot())->getColourName() << std::endl;
+  std::cout << "Root = " << (rbt->getRoot())->getData() << std::endl;
   return 0;
 }

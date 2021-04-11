@@ -67,3 +67,7 @@ bool RedBlackTree::replaceChild(Node* parent, Node* currentChild, Node* newChild
   }
   return false;
 }
+
+std::ostream& operator<< (std::ostream& out, RedBlackTree* r) {
+  return out;
+}

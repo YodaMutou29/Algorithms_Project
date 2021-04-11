@@ -16,6 +16,9 @@ class Node {
   int getData();
   std::string getColourName();
   Node* getParent();
+  Node* getGrandparent();
+  Node* getSibling();
+  Node* getUncle();
   Node* getLeft();
   Node* getRight();
 
