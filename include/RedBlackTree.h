@@ -16,7 +16,7 @@ class RedBlackTree {
 
   void rotateLeft(Node*); //fix (root node should be black and 2)
   void rotateRight(Node*); //fix?
-  //add an insert function
+  void insert(Node*);
   //add a remove function
 
   int getHeight();
