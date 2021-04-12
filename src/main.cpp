@@ -1,4 +1,5 @@
 #include <iostream>
+#include <time.h>
 #include "RedBlackTree.h"
 #include "Node.h"
 
@@ -46,8 +47,21 @@ int main() {
     //<< std::endl;
   std::cout << rbt << std::endl;
 
+
   std::cout << "Performing a left rotation..." << std::endl;
   rbt->rotateLeft((rbt->getRoot())->getRight());
   std::cout << "Root: " << rbt->getRoot()<< std::endl;
+
+  std::cout << "Testing time complexity: " << std::endl;
+  clock_t t = clock();
+  for (int i = 0; i < 10000; i++) {
+    Node* n = new Node();
+    n->setColour(Node::RED);
+    n->setData(i);
+    rbt->insert(n);
+  }
+  t = clock() - t;
+  std::cout << "When n = 10000, it takes " << ((float)t)/CLOCKS_PER_SEC <<
+  " seconds to insert them." << std::endl;
   return 0;
 }
