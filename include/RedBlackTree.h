@@ -14,9 +14,11 @@ class RedBlackTree {
   RedBlackTree();
   ~RedBlackTree();
 
-  void rotateLeft(Node*); //fix (root node should be black and 2)
-  void rotateRight(Node*); //fix?
-  //add an insert function
+  void rotateLeft(RedBlackTree*, Node*); //fix (root node should be black and 2)
+  void rotateRight(RedBlackTree*, Node*); //fix?
+  void insert(RedBlackTree*, Node*);
+  void binaryInsert(RedBlackTree*, Node*);
+  void balanceTree(RedBlackTree*, Node*);
   //add a remove function
 
   int getHeight();
@@ -29,7 +31,7 @@ class RedBlackTree {
   Node* root = new Node();
   int numOfNodes = 1;
 };
-//implement ostream override
+
 std::ostream& operator<< (std::ostream&, RedBlackTree*);
 std::ostream& operator<< (std::ostream&, Node*);
 #endif

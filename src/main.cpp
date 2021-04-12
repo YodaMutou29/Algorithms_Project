@@ -32,6 +32,9 @@ int main() {
   ((rbt->getRoot())->getRight())->setData(2);
   std::cout << "Setting colour of right node to black..." << std::endl;
   ((rbt->getRoot())->getRight())->setColour(Node::BLACK);
+  if (((rbt->getRoot())->getRight())->getParent() == nullptr) {
+    std::cout << "you goofed" << std::endl;
+  }
   //std::cout << "Right: " << (rbt->getRoot())->getRight() << std::endl;
 
   std::cout << "Setting right node of right node of root to 1..." << std::endl;

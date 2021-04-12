@@ -11,7 +11,7 @@ RedBlackTree::~RedBlackTree() {
   delete root;
 }
 
-void RedBlackTree::rotateLeft(Node* n) {
+void RedBlackTree::rotateLeft(RedBlackTree* t, Node* n) {
   Node* leftOfRightChild = (n->getRight())->getLeft();
   if (n->getParent() != nullptr) {
     replaceChild(n->getParent(), n, n->getRight());
@@ -23,7 +23,7 @@ void RedBlackTree::rotateLeft(Node* n) {
   setChild(n, "right", leftOfRightChild);
 }
 
-void RedBlackTree::rotateRight(Node* n) {
+void RedBlackTree::rotateRight(RedBlackTree* t, Node* n) {
   Node* rightOfLeftChild = (n->getLeft())->getRight();
   if (n->getParent() != nullptr) {
     replaceChild(n->getParent(), n, n->getLeft());
@@ -33,6 +33,20 @@ void RedBlackTree::rotateRight(Node* n) {
   }
   setChild(n->getLeft(), "right", n);
   setChild(n, "left", rightOfLeftChild);
+}
+
+void RedBlackTree::binaryInsert(RedBlackTree* t, Node* n) {
+
+}
+
+void RedBlackTree::insert(RedBlackTree* t, Node* n) {
+  binaryInsert(t, n);
+  n->setColour(Node::RED);
+  balanceTree(t, n);
+}
+
+void RedBlackTree::balanceTree(RedBlackTree* t, Node* n) {
+  
 }
 
 int RedBlackTree::getHeight() {
