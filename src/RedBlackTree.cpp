@@ -11,7 +11,7 @@ RedBlackTree::~RedBlackTree() {
   delete root;
 }
 
-void RedBlackTree::rotateLeft(Node* n) {
+void RedBlackTree::rotateLeft(RedBlackTree* t, Node* n) {
   Node* leftOfRightChild = (n->getRight())->getLeft();
   if (n->getParent() != nullptr) {
     replaceChild(n->getParent(), n, n->getRight());
@@ -23,7 +23,7 @@ void RedBlackTree::rotateLeft(Node* n) {
   setChild(n, "right", leftOfRightChild);
 }
 
-void RedBlackTree::rotateRight(Node* n) {
+void RedBlackTree::rotateRight(RedBlackTree* t, Node* n) {
   Node* rightOfLeftChild = (n->getLeft())->getRight();
   if (n->getParent() != nullptr) {
     replaceChild(n->getParent(), n, n->getLeft());
