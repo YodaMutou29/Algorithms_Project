@@ -53,7 +53,14 @@ Node* Node::getSibling() {
 }
 
 Node* Node::getUncle() {
-  return parent->getSibling();
+  if (getGrandparent() != nullptr) {
+    if (parent == getGrandparent()->getLeft()) {
+      return getGrandparent()->getRight();
+    } else {
+      return getGrandparent()->getLeft();
+    }
+  }
+  return nullptr;
 }
 
 Node* Node::getLeft() {

@@ -35,22 +35,90 @@ void RedBlackTree::rotateRight(RedBlackTree* t, Node* n) {
   setChild(n, "left", rightOfLeftChild);
 }
 
-void RedBlackTree::binaryInsert(RedBlackTree* t, Node* n) {
-
-}
-
-void RedBlackTree::insert(RedBlackTree* t, Node* n) {
-  binaryInsert(t, n);
+void RedBlackTree::insert(Node* n) {
+  Node* checkNode = nullptr;
+  if (getRoot()->getLeft() == nullptr && getRoot()->getRight() == nullptr) {
+    setRoot(n);
+  } else {
+    checkNode = getRoot();
+    while (n->getParent() == nullptr) {
+      if (n->getData() == checkNode->getData()) {
+        std::cout << "Error: Node could not be added (Duplicate Node)" << std::endl;
+        return;
+      } else if (n->getData() > checkNode->getData()) {
+        if(checkNode->getRight() == nullptr) {
+          setChild(checkNode, "right", n);
+        } else {
+          checkNode = checkNode->getRight();
+        }
+      } else {
+        if(checkNode->getLeft() == nullptr) {
+          setChild(checkNode, "left", n);
+        } else {
+          checkNode = checkNode->getLeft();
+        }
+      }
+    }
+  }
   n->setColour(Node::RED);
-  balanceTree(t, n);
-}
-
-void RedBlackTree::balanceTree(RedBlackTree* t, Node* n) {
-  
+  if (n->getGrandparent() == nullptr) {
+    if (n->getParent() == nullptr)
+      n->setColour(Node::BLACK);
+  } else if (n->getUncle() == nullptr || n->getUncle()->getColourName() == "black") {
+    if (n->getGrandparent()->getLeft() == n->getParent()) {
+      if (n->getParent()->getRight() == n) {
+        rotateLeft(n->getParent());
+      } else {
+        if(n->getParent()->getColourName() == "red") {
+          n->getParent()->setColour(Node::BLACK);
+        } else {
+          n->getParent()->setColour(Node::RED);
+        }
+        if(n->getGrandparent()->getColourName() == "black") {
+          n->getGrandparent()->setColour(Node::BLACK);
+        } else {
+          n->getGrandparent()->setColour(Node::RED);
+        }
+        rotateRight(n->getGrandparent());
+      }
+    } else {
+      if (n->getParent()->getLeft() == n) {
+        rotateRight(n->getParent());
+      } else {
+        if(n->getParent()->getColourName() == "red") {
+          n->getParent()->setColour(Node::BLACK);
+        } else {
+          n->getParent()->setColour(Node::RED);
+        }
+        if(n->getGrandparent()->getColourName() == "black") {
+          n->getGrandparent()->setColour(Node::BLACK);
+        } else {
+          n->getGrandparent()->setColour(Node::RED);
+        }
+        rotateLeft(n->getGrandparent());
+      }
+    }
+  } else {
+    if (n->getParent()->getColourName() == "red") {
+      n->getParent()->setColour(Node::BLACK);
+    } else {
+      n->getParent()->setColour(Node::RED);
+    }
+    if (n->getGrandparent()->getColourName() == "red") {
+      n->getGrandparent()->setColour(Node::BLACK);
+    } else {
+      n->getGrandparent()->setColour(Node::RED);
+    }
+    if (n->getUncle()->getColourName() == "red") {
+      n->getUncle()->setColour(Node::BLACK);
+    } else {
+      n->getUncle()->setColour(Node::RED);
+    }
+  }
 }
 
 int RedBlackTree::getHeight() {
-  return std::log2(numOfNodes);
+  return log2(numOfNodes);
 }
 
 void RedBlackTree::setRoot(Node* r) {
