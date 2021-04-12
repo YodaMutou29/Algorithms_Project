@@ -117,6 +117,124 @@ void RedBlackTree::insert(Node* n) {
   }
 }
 
+void RedBlackTree::remove(Node* n) {
+  Node* replacement = nullptr;
+  Node* replacementParent = nullptr;
+  Node* replaceReplacement = nullptr;
+  std::string oldColour = n->getColourName();
+  if (n->getLeft() == nullptr && n->getRight() == nullptr) {
+
+  } else if (n->getLeft() == nullptr || n->getRight() == nullptr) {
+    if (n->getLeft() == nullptr) {
+      replaceChild(n->getParent(), n, n->getRight());
+      replacement = n->getRight();
+    } else {
+      replaceChild(n->getParent(), n, n->getLeft());
+      replacement = n->getLeft();
+    }
+  } else {
+    replacement = n->getRight();
+    while (replacement->getLeft() != nullptr) {
+      replacementParent = replacement;
+      replacement = replacement->getLeft();
+      replaceReplacement = replacement->getRight();
+    }
+    replaceChild(replacementParent, replacement, replaceReplacement);
+    replaceChild(n->getParent(), n, replacement);
+  }
+  delete n;
+  n = nullptr;
+  if (oldColour == "red") {
+    if(replacement->getColourName() == "red" || replacement == nullptr) {
+      return;
+    } else {
+      replacement->setColour(Node::RED);
+    }
+  } else {
+    if (replacement->getColourName() == "red") {
+      replacement->setColour(Node::BLACK);
+      return;
+    }
+  }
+  Node* sibling = replaceReplacement->getSibling();
+  if(replaceReplacement->getColourName() == "red") {
+    replaceReplacement->setColour(Node::BLACK);
+    return;
+  }
+  while(replaceReplacement->getColourName() == "black") {
+    if (sibling->getColourName() == "red") {
+      sibling->setColour(Node::BLACK);
+      replaceReplacement->getParent()->setColour(Node::RED);
+      if (replaceReplacement->getParent()->getLeft() == replaceReplacement) {
+        rotateLeft(replaceReplacement->getParent());
+      } else {
+        rotateRight(replaceReplacement->getParent());
+      }
+      if (replaceReplacement->getParent()->getLeft() == replaceReplacement) {
+        replaceReplacement->getParent()->setRight(sibling);
+        sibling->setParent(replaceReplacement->getParent());
+      } else {
+        replaceReplacement->getParent()->setLeft(sibling);
+        sibling->setParent(replaceReplacement->getParent());
+      }
+    }
+    if (sibling->getLeft()->getColourName() == "black" || sibling->getLeft() == nullptr) {
+      if (sibling->getRight()->getColourName() == "black" || sibling->getRight() == nullptr) {
+        sibling->setColour(Node::RED);
+        replaceReplacement = replaceReplacement->getParent();
+        if (replaceReplacement->getColourName() == "red") {
+          replaceReplacement->setColour(Node::BLACK);
+          return;
+        }
+      }
+    }
+    if (sibling->getColourName() == "black") {
+      if ((replaceReplacement->getParent()->getLeft() == replaceReplacement &&
+          sibling->getLeft()->getColourName() == "red" && sibling->getRight()->
+          getColourName() == "black")) {
+        sibling->getLeft()->setColour(Node::BLACK);
+        sibling->setColour(Node::RED);
+        rotateRight(sibling);
+        sibling = replaceReplacement->getParent()->getRight();
+      }
+      if ((replaceReplacement->getParent()->getRight() == replaceReplacement &&
+          sibling->getRight()->getColourName() == "red" && sibling->getLeft()->
+          getColourName() == "black")) {
+        sibling->getRight()->setColour(Node::BLACK);
+        sibling->setColour(Node::RED);
+        rotateLeft(sibling);
+        sibling = replaceReplacement->getParent()->getLeft();
+      }
+    }
+    if (sibling->getColourName() == "black") {
+      if(replaceReplacement->getParent()->getLeft() == replaceReplacement &&
+        sibling->getRight()->getColourName() == "red") {
+        if (replaceReplacement->getParent()->getColourName() == "red") {
+          sibling->setColour(Node::RED);
+        } else {
+          sibling->setColour(Node::BLACK);
+        }
+        replaceReplacement->getParent()->setColour(Node::BLACK);
+        sibling->getRight()->setColour(Node::BLACK);
+        rotateLeft(replaceReplacement->getParent());
+        return;
+      }
+      if(replaceReplacement->getParent()->getRight() == replaceReplacement &&
+        sibling->getLeft()->getColourName() == "red") {
+        if (replaceReplacement->getParent()->getColourName() == "red") {
+          sibling->setColour(Node::RED);
+        } else {
+          sibling->setColour(Node::BLACK);
+        }
+        replaceReplacement->getParent()->setColour(Node::BLACK);
+        sibling->getLeft()->setColour(Node::BLACK);
+        rotateRight(replaceReplacement->getParent());
+        return;
+      }
+    }
+  }
+}
+
 int RedBlackTree::getHeight() {
   return log2(numOfNodes);
 }
